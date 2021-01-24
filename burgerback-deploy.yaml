@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: burgerback-deploy
+  name: burgerback-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: burgerback-deploy
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: burgerback-deploy
+    spec:
+      containers:
+      - image: image-registry.openshift-image-registry.svc:5000/labproj16/burgerback:0.1
+        name: burgerfront
+        ports:
+        - containerPort: 8080
+        resources: {}
+        envFrom:
+        - configMapRef:
+            name: burgerback-cmap
+        - secretRef:
+            name: burgerback-secret
+status: {}
